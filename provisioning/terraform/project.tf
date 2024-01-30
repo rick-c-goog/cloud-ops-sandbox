@@ -15,14 +15,17 @@
 # Enable Google Cloud APIs
 locals {
   base_apis = [
-    "clouderrorreporting.googleapis.com",
+   "clouderrorreporting.googleapis.com",
     "cloudprofiler.googleapis.com",
     "container.googleapis.com", /* compute.googleapis.com is provisioned as a dependency */
+    "iam.googleapis.com",
+    "cloudtrace.googleapis.com"
   ]
   mesh_apis = [
     "mesh.googleapis.com",
     "gkehub.googleapis.com",
     "cloudresourcemanager.googleapis.com",
+    "meshconfig.googleapis.com"
   ]
   google_apis = concat(local.base_apis, var.enable_asm ? local.mesh_apis : [])
 }

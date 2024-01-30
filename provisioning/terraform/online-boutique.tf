@@ -21,7 +21,7 @@ locals {
 data "google_compute_default_service_account" "default" {
   # ensure that default compute service account is provisioned
   depends_on = [
-    module.gcloud,
+    module.google_apis
   ]
 }
 
@@ -66,8 +66,8 @@ resource "null_resource" "online_boutique_kustomization" {
   }
 
   depends_on = [
-    module.gcloud,
-    null_resource.install_asm
+    module.google_apis,
+    module.asm
   ]
 }
 

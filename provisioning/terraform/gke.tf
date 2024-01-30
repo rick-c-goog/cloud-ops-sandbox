@@ -18,6 +18,12 @@ locals {
   resource_labels = var.enable_asm ? { "mesh_id" = "proj-${data.google_project.info.number}" } : {}
 }
 
+resource "google_compute_network" "default-network" {
+  name                    = "default"
+  project                 = var.project_id
+  auto_create_subnetworks = true
+  depends_on= [module.google_apis]
+}
 # look at https://registry.terraform.io/modules/terraform-google-modules/kubernetes-engine/google/latest
 module "gke" {
   source = "terraform-google-modules/kubernetes-engine/google"
@@ -49,8 +55,8 @@ module "gke" {
       name               = "default-node-pool"
       initial_node_count = var.node_pool_config.initial_node_count
       machine_type       = var.node_pool_config.machine_type
-      min_count          = var.node_pool_config.min_count
-      max_count          = var.node_pool_config.max_count
+      min_node_count          = var.node_pool_config.min_node_count
+      max_node_count          = var.node_pool_config.max_node_count
 
     },
   ]
@@ -73,5 +79,5 @@ module "gke" {
     ]
   }
 
-  depends_on = [module.google_apis]
+  depends_on = [module.google_apis,google_compute_network.default-network]
 }
