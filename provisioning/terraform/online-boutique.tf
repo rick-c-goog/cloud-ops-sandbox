@@ -34,6 +34,14 @@ resource "google_project_iam_binding" "default_compute_as_trace_agent" {
   ]
 }
 
+resource "google_project_iam_binding" "default_compute_as_profiler_agent" {
+  project = data.google_project.info.project_id
+  role    = "roles/cloudprofiler.agent"
+
+  members = [
+    "serviceAccount:${data.google_compute_default_service_account.default.email}",
+  ]
+}
 resource "google_service_account_iam_binding" "default_compute_as_k8s_sa" {
   service_account_id = data.google_compute_default_service_account.default.name
   role               = "roles/iam.workloadIdentityUser"
