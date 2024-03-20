@@ -15,7 +15,7 @@
  */
 
 # Required input variables
-variable "project_id" {
+variable "TF_VAR_project_id" {
   type        = string
   description = "The GCP project ID to apply this config to"
 }
