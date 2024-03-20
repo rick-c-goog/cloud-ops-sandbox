@@ -94,6 +94,7 @@ create_subcommand() {
     fi
     if ! (terraform init -backend-config "bucket=${TF_BUCKET_NAME}" -backend-config "prefix=${TERRAFORM_PREFIX}" -lockfile=false); then error "Failed to apply terraform configuration. Run with --verbose flag to get more details."; fi && \
     export TF_VAR_project_id=$PROJECT_ID
+    export TF_VAR_gcp_project_id=$PROJECT_ID
     terraform apply -auto-approve -var-file="${TF_FILE_LOCATION}" && \
     print_launch_instructions
     send_telemetry "hipstershop-available"
